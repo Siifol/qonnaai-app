@@ -3,20 +3,21 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Resolve directory pathing for serving static assets safely
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Instruct the server to look into the 'public' directory for index.html
+// Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Fallback path router to seamlessly redirect any requests to the homepage dashboard
+// Explicitly send index.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Final catch-all to ensure it stays on your index.html
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 QonnaAI Server running smoothly on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
