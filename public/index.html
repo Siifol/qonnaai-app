@@ -105,6 +105,438 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
                             <path d="M12,12A5,5 0 0,0 17,7A5,5 0 0,0 12,2A5,5 0 0,0 7,7A5,5 0 0,0 12,12M12,14C8.13,14 2,15.93 2,19.8V22H22V19.8C22,15.93 15.87,14 12,14Z" />
                         </svg>
+<div class="profile-container" onclick="openModal()" style="cursor: pointer;">
+    <span class="avatar-circle">...</span>
+    <span>Diittaa T.</span>
+</div>
+
+                <div class="lang-selector">
+                    <button class="lang-btn">🌐 Language</button>
+                    <div class="lang-dropdown">
+                        <a href="#" onclick="setSystemLanguage('om')">Afaan Oromoo</a>
+                        <a href="#" onclick="setSystemLanguage('en')">English</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 id="hero-title">QonnaAI Oromiyaa</h1>
+        <p id="hero-desc">Connecting regional production units across Shaggar's 12 sub-cities with localized real-time market pricing engines and secure financial logistics processing systems.</p>
+        <a href="#dashboard" id="hero-action-btn" class="btn btn-primary">Launch Ecosystem</a>
+    </section>
+
+    <section id="dashboard" class="dashboard-section">
+        <div class="dashboard-wrapper">
+            <aside>
+                <h3 id="sidebar-header">Naannoo Daawwannaa</h3>
+                <ul class="sidebar-menu">
+                    <li id="sidebar-item-1">🏠 Iftaandardii Hojii</li>
+                </ul>
+            </aside>
+
+            <main class="db-content">
+                <div class="welcome-card" id="welcomeBanner">
+                    <h3 id="welcome-header">Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan</h3>
+                    <p id="welcome-sub">Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.</p>
+                </div>
+
+                <div class="db-grid">
+
+                    <div class="db-card">
+                        <h4 id="card1-title">📍 Haala Noodii Hojii</h4>
+                        <div id="profileRowsContainer" style="margin-top: 5px;">
+                            </div>
+                    </div>
+
+                    <div class="db-card">
+                        <h4 id="card2-title">💬 Gargaaraa Giddugaleessaa</h4>
+                        <div class="chat-box" id="chatDisplay">
+                            <div id="chat-initial-msg" style="color: var(--text-light)">System active. Ask a question regarding supply lines, weather variances, or input details.</div>
+                        </div>
+                        <div class="chat-group">
+                            <input type="text" id="aiInput" class="hub-search-box" style="margin:0;" placeholder="Gaaffii keessan asitti barreessaa...">
+                            <button class="btn-send" id="aiSendBtn" onclick="dispatchAIQuery()">Send</button>
+                        </div>
+                    </div>
+
+                    <div class="db-card full-width-card">
+                        <h4 id="card3-title">📋 Meeshaalee Qonnaa Hub (<span id="countDisplay">100</span> Argaman)</h4>
+                        
+                        <input type="text" id="hubSearchBar" class="hub-search-box" placeholder="Meeshaalee barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)..." oninput="executeHubFiltering()">
+
+                        <div class="tab-strip">
+                            <button id="cropsTabBtn" class="tab-btn active-tab" onclick="toggleHubLayer('crops')">🌾 Sanyii Filatamaa</button>
+                            <button id="toolsTabBtn" class="tab-btn" onclick="toggleHubLayer('tools')">🛠️ Meeshaalee Qonnaa</button>
+                        </div>
+
+                        <div id="catalogDisplayView" class="item-scroll-zone"></div>
+
+                        <div id="auditDisplayConsole" class="analyzer-panel"></div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <footer>
+        <p>QonnaAI Oromiyaa © 2026 • Scaled Full-Stack Mobile Prototyping Platform</p>
+    </footer>
+
+    <script>
+        let operationalCategoryState = 'crops';
+        let currentLanguage = 'om';
+        const centralizedLogisticsDatabase = [];
+
+        // Programmatic Seed Production Mapping Routine (50 Unique Commercial Lots)
+        const cropVarietiesList = ["Teff Magariisa", "Teff Magna Premium", "Wheat Qamadii-H1", "Wheat Durum-V3", "Maize BH-546 High-Yield", "Maize Hybrid-M7", "Barley Garbuu-Malt", "Highland Barley Variety", "Faba Bean Baaqelaa", "Chickpea Shimbra Lot", "Lentil Misira Grain", "Sorghum Misinga Line", "Soybean Soya Seed", "Sesame Saniit Oilseed", "Coffee Buna-Arabi Choice", "Haricot Bean Pods", "Rice Ruuz-S3 Cluster", "Canola Seed Extract", "Sunflower Seed Core", "Garlic Qullubbii Bulbs", "Onion Shunkurt Roots", "Potato Dinicha Tubers", "Tomato Timaati Fruit", "Pepper Barbaree Spice", "Cabbage Gommada Leaves"];
+        for(let i = 1; i <= 50; i++) {
+            const indexValue = (i - 1) % cropVarietiesList.length;
+            const seedLabelName = `${cropVarietiesList[indexValue]} (Lot #${100 + i})`;
+            const valueMatrixPrice = 150 + (i * 90) % 4400;
+            
+            centralizedLogisticsDatabase.push({
+                id: `ID-SEED-${200 + i}`,
+                name: seedLabelName,
+                category: 'crops',
+                price: `${valueMatrixPrice.toLocaleString()} ETB`,
+                status: '', // Populated by language loop
+                spec: ''    // Populated by language loop
+            });
+        }
+
+        // Programmatic Materials Procurement Mapping Routine (50 Unique Industrial Models)
+        const operationalEquipmentList = ["Backpack Chemical Sprayer", "NPS-Boron Fertilizer Bag", "UREA Premium Nitrogen Pack", "Systemic Herbicide Liter", "Fungicide Shield Fluid", "Mechanized Hand Cultivator", "Drip Irrigation Line Kit", "Water Pump 5HP Motor", "Solar Water Pump Array", "Pruning Shears Blade", "Wheelbarrow Heavy Duty", "Digital Soil PH Tester", "Moisture Sensor Probe", "Shovel Steel-T Handle", "Sickle Haamtuu Blade", "Axe Mitiyee Iron Head", "Farm Fencing Mesh Roll", "Storage Silo Ventilation Bag", "Tractor Disc Harrow Frame", "Seed Drilling Mechanical Unit"];
+        for(let i = 1; i <= 50; i++) {
+            const indexValue = (i - 1) % operationalEquipmentList.length;
+            const machineryLabelName = `${operationalEquipmentList[indexValue]} (Model X-${i})`;
+            const valueMatrixPrice = 400 + (i * 340) % 24000;
+            
+            centralizedLogisticsDatabase.push({
+                id: `ID-TOOL-${500 + i}`,
+                name: machineryLabelName,
+                category: 'tools',
+                price: `${valueMatrixPrice.toLocaleString()} ETB`,
+                status: '', // Populated by language loop
+                spec: ''    // Populated by language loop
+            });
+        }
+
+        // Trigger dynamic initialization to complete initial Oromo UI configuration elements
+        setSystemLanguage('om');
+
+        // Control Router Functions
+        function toggleHubLayer(targetLayer) {
+            operationalCategoryState = targetLayer;
+            document.getElementById('cropsTabBtn').classList.toggle('active-tab', targetLayer === 'crops');
+            document.getElementById('toolsTabBtn').classList.toggle('active-tab', targetLayer === 'tools');
+            document.getElementById('auditDisplayConsole').style.display = 'none';
+            executeHubFiltering();
+        }
+
+        function executeHubFiltering() {
+            const displayZone = document.getElementById('catalogDisplayView');
+            const criteriaQuery = document.getElementById('hubSearchBar').value.toLowerCase().trim();
+            let compiledHtml = '';
+
+            const evaluationGrid = centralizedLogisticsDatabase.filter(item => {
+                const matchesLayer = item.category === operationalCategoryState;
+                const matchesSearch = item.name.toLowerCase().includes(criteriaQuery) || item.id.toLowerCase().includes(criteriaQuery);
+                return matchesLayer && matchesSearch;
+            });
+
+            if(evaluationGrid.length === 0) {
+                const fallbackMsg = currentLanguage === 'en' ? "No registered logs match the active parameters." : "Galmeen dhimma kanaan wal qabatu hin argamne.";
+                displayZone.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-light); font-size:0.85rem;">${fallbackMsg}</div>`;
+                return;
+            }
+
+            evaluationGrid.forEach(item => {
+                // Read stock values generated in memory map tracking routines
+                const badgeStyleClass = (item.status === 'In Stock' || item.status === 'Hanga Gahaa') ? 'instock' : 'lowstock';
+                compiledHtml += `
+                    <div class="market-item">
+                        <div style="max-width:62%;">
+                            <b style="color:var(--text-main); font-size:0.85rem;">${item.name}</b><br>
+                            <span class="badge ${badgeStyleClass}">${item.status}</span>
+                            <span style="font-size:0.7rem; color:var(--text-light); margin-left:4px;">${item.id}</span>
+                        </div>
+                        <div style="display:flex; align-items:center;">
+                            <span class="price">${item.price}</span>
+                            <button class="detail-btn" onclick="openTechnicalConsole('${item.id}')">Details</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            displayZone.innerHTML = compiledHtml;
+        }
+
+        function openTechnicalConsole(idKey) {
+            const consolePanel = document.getElementById('auditDisplayConsole');
+            const matchedObject = centralizedLogisticsDatabase.find(item => item.id === idKey);
+
+            if(matchedObject) {
+                consolePanel.style.display = 'block';
+                const successNotice = currentLanguage === 'en' ? "✓ Verified Unit Pricing Validated via Regional Union Hubs." : "✓ Gatiin meeshaa kun mana oomishaa naannootiin mirkanaa'eera.";
+                const indexLabel = currentLanguage === 'en' ? "Database Index Code" : "Koodii Galmee Teessoo";
+                const metricsLabel = currentLanguage === 'en' ? "Technical Performance Metrics" : "Safartuu Hojii Teeknikaa";
+                
+                consolePanel.innerHTML = `
+                    <h5 style="color:var(--dark); font-size:0.9rem; margin-bottom:5px;">📋 ${matchedObject.name}</h5>
+                    <p style="margin-bottom:2px;"><b>${indexLabel}:</b> ${matchedObject.id}</p>
+                    <p style="margin-bottom:2px;"><b>${metricsLabel}:</b> ${matchedObject.spec}</p>
+                    <p style="color:var(--secondary); font-weight:700; margin-top:4px; font-size:0.8rem;">${successNotice}</p>
+                `;
+            }
+        }
+
+        function dispatchAIQuery() {
+            const field = document.getElementById('aiInput');
+            const chatBox = document.getElementById('chatDisplay');
+            const messageText = field.value.trim();
+            if(!messageText) return;
+
+            const userTag = currentLanguage === 'en' ? "Farmer" : "Qonnaan Bulaa";
+            chatBox.innerHTML += `<div style="margin-top:6px; color:var(--secondary);"><b>👨‍🌾 ${userTag}:</b> ${messageText}</div>`;
+            field.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                let textReply = "";
+                const matchedKey = messageText.toLowerCase();
+
+                if (matchedKey.includes('qoricha') || matchedKey.includes('seed') || matchedKey.includes('sanyii')) {
+                    textReply = currentLanguage === 'om' 
+                        ? "Sanyii filatamaa Shaggar keessatti argamuuf tarree 'Sanyii Filatamaa' jedhu baha meeshaalee keenya irratti sakatta'aa. Gatiin isaanii sirriidha."
+                        : "To investigate advanced seed lines mapped for the Shaggar sub-cities, filter our dynamic warehouse catalog profile. All pricing streams are live.";
+                } else if (matchedKey.includes('rooba') || matchedKey.includes('weather') || matchedKey.includes('bifa')) {
+                    textReply = currentLanguage === 'om'
+                        ? "Lega Tafo keessatti haalli qilleensaa rooba madaalawaa agarsiisa. Meeshaalee qonnaa keessan gogsuuf qophaahaa."
+                        : "Moisture levels are updating in real-time across the Lega Tafo cluster. Shield incoming chemical and fertilizer bags from external humidity limits.";
+                } else {
+                    textReply = currentLanguage === 'om'
+                        ? "Gorsa teeknoolojii oomishaa fi meeshaalee qonnaa argachuuf gadi fageenyaan gaafadhaa."
+                        : "Specify your query regarding asset identifiers, credit options via Awash structures, or inventory safety values.";
+                }
+
+                chatBox.innerHTML += `<div style="margin-top:6px; color:var(--dark);"><b>🤖 QonnaAI Engine:</b> ${textReply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 750);
+        }
+
+        function setSystemLanguage(lang) {
+            currentLanguage = lang;
+            
+            // 1. Core Header & Hero Translation Logic Mapping Blocks
+            if(lang === 'en') {
+                document.getElementById('hero-title').innerText = "QonnaAI Oromiyaa Hub";
+                document.getElementById('hero-desc').innerText = "Connecting regional production units across Shaggar's sub-cities with automated cooperative inventory tracking, pricing matrices, and secure banking structures.";
+                document.getElementById('hero-action-btn').innerText = "Launch Ecosystem";
+                document.getElementById('welcome-header').innerText = "Welcome to QonnaAI Portal Engine";
+                document.getElementById('welcome-sub').innerText = "System tracking 100+ input codes. Real-time telemetry linked with Awash Bank transactional systems loop active.";
+                
+                document.getElementById('sidebar-header').innerText = "Navigation";
+                document.getElementById('sidebar-item-1').innerText = "🏠 Main Workspace";
+                document.getElementById('card1-title').innerText = "📍 Active Node Status";
+                document.getElementById('card2-title').innerText = "💬 Live Assistant Matrix";
+                document.getElementById('card3-title').innerHTML = `📋 Input Logistics Hub (<span id="countDisplay">100</span> items)`;
+                
+                document.getElementById('hubSearchBar').placeholder = "Search inputs (e.g. Teff, Tractor, Pump)...";
+                document.getElementById('cropsTabBtn').innerText = "🌾 Certified Seeds";
+                document.getElementById('toolsTabBtn').innerText = "🛠️ Tools / Materials";
+                document.getElementById('aiInput').placeholder = "Type inquiry here...";
+                document.getElementById('chat-initial-msg').innerText = "System active. Ask a question regarding supply lines, weather variances, or input details.";
+            } else {
+                document.getElementById('hero-title').innerText = "QonnaAI Oromiyaa";
+                document.getElementById('hero-desc').innerText = "Connecting regional production units across Shaggar's 12 sub-cities with localized real-time market pricing engines and secure financial logistics processing systems.";
+                document.getElementById('hero-action-btn').innerText = "Giddugaleessa Banu";
+                document.getElementById('welcome-header').innerText = "Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan";
+                document.getElementById('welcome-sub').innerText = "Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.";
+                
+                document.getElementById('sidebar-header').innerText = "Naannoo Daawwannaa";
+                document.getElementById('sidebar-item-1').innerText = "🏠 Iftaandardii Hojii";
+                document.getElementById('card1-title').innerText = "📍 Haala Noodii Hojii";
+                document.getElementById('card2-title').innerText = "💬 Gargaaraa Giddugaleessaa";
+                document.getElementById('card3-title').innerHTML = `📋 Meeshaalee Qonnaa Hub (<span id="countDisplay">100</span> Argaman)`;
+                
+                document.getElementById('hubSearchBar').placeholder = "Meeshaalee barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)...";
+                document.getElementById('cropsTabBtn').innerText = "🌾 Sanyii Filatamaa";
+                document.getElementById('toolsTabBtn').innerText = "🛠️ Meeshaalee Qonnaa";
+                document.getElementById('aiInput').placeholder = "Gaaffii keessan asitti barreessaa...";
+                document.getElementById('chat-initial-msg').innerText = "Sirni hojii banaadha. Ghaaffii waa'ee dhiyeessii oomishaa ykn haala qilleensaa asitti gaafadhaa.";
+            }
+
+            // 2. Profile Details Component Dynamic Language Replacement Block
+            const profileCard = document.getElementById('profileRowsContainer');
+            if(lang === 'en') {
+                profileCard.innerHTML = `
+                    <div class="profile-row"><strong>Farmer Node:</strong> <span>Diittaa Tasfaayee</span></div>
+                    <div class="profile-row"><strong>Location Cluster:</strong> <span>Shaggar Hub</span></div>
+                    <div class="profile-row"><strong>District Sector:</strong> <span>Lega Tafo Corridor</span></div>
+                    <div class="profile-row"><strong>Farm Scale Size:</strong> <span>4.5 Hectares</span></div>
+                    <div class="profile-row"><strong>Node Status:</strong> <span style="color:var(--primary); font-weight:700;">✓ Verified Node</span></div>
+                `;
+            } else {
+                profileCard.innerHTML = `
+                    <div class="profile-row"><strong>Node Qonnaan Bulaa:</strong> <span>Diittaa Tasfaayee</span></div>
+                    <div class="profile-row"><strong>Iddoo Giddugaleessaa:</strong> <span>Mataa Hub Shaggar</span></div>
+                    <div class="profile-row"><strong>Mataa Sektaraa:</strong> <span>Daandii Lega Tafoo</span></div>
+                    <div class="profile-row"><strong>Bal'ina Dachii:</strong> <span>Hektaara 4.5</span></div>
+                    <div class="profile-row"><strong>Sadarkaa Noodii:</strong> <span style="color:var(--primary); font-weight:700;">✓ Mirkanaa'eera</span></div>
+                `;
+            }
+
+            // 3. Clear inspector details card to protect against layout caching bugs
+            document.getElementById('auditDisplayConsole').style.display = 'none';
+
+            // 4. Update memory array tracking loops for all 100 active dynamic rows
+            centralizedLogisticsDatabase.forEach((item, i) => {
+                const itemIndex = i % 25; 
+                if (item.category === 'crops') {
+                    if (lang === 'en') {
+                        item.status = (i + 1) % 6 === 0 ? 'Low Stock' : 'In Stock';
+                        item.spec = `Yield Expectation: +${20 + (itemIndex % 15)}% vs baseline. Drought Tolerance Index: Certified Tier-1. Optimized for Shaggar municipal agricultural soils.`;
+                    } else {
+                        item.status = (i + 1) % 6 === 0 ? 'Hanqina' : 'Hanga Gahaa';
+                        item.spec = `Abdiin Oomishaa: +${20 + (itemIndex % 15)}% oomisha idilee oli. Sadarkaa Dandamannaa Balaa Goginsi: Sadarkaa Tokkoffaa mirkanaa'e. Biyyee Shaggaritiif kan mijaaye.`;
+                    }
+                } else {
+                    if (lang === 'en') {
+                        item.status = (i + 1) % 9 === 0 ? 'Low Stock' : 'In Stock';
+                        item.spec = `Industrial Infrastructure Code: T-${800 + i}. Maintenance Interval: Extended low overhead. Fully qualified for Awash Bank 10M collateral-free loans.`;
+                    } else {
+                        item.status = (i + 1) % 9 === 0 ? 'Hanqina' : 'Hanga Gahaa';
+                        item.spec = `Koodii Warshaa Teeknoolojii: T-${800 + i}. Yeroo Suphaa: Baasii xiqqaa fi dheeraa. Liqii Baankii Awash Birrii Miliyoona 10 wabii malee fudhachuuf kan mijaaye.`;
+                    }
+                }
+            });
+
+            // 5. Force refresh template iteration loops inside layout grid frames
+            executeHubFiltering();
+        }
+    </script>
+    <div id="registerModal" style="display:none; position:fixed; top:20%; left:30%; background:white; padding:20px; border:1px solid #ccc; z-index:1000;">
+  <h3>Register</h3>
+  <select id="userRole">
+    <option value="farmer">Farmer</option>
+    <option value="supplier">Supplier</option>
+  </select>
+  <button onclick="submitRegistration()">Register</button>
+  <button onclick="closeModal()">Close</button>
+</div>
+    <script>
+        // Function to show the modal when clicking your profile icon
+        function openModal() {
+            document.getElementById('registerModal').style.display = 'bloc<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QonnaAI Oromiyaa v2.5 - Enterprise Final</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #e8f5e9;
+            --secondary: #1565c0;
+            --dark: #1b5e20;
+            --text-main: #2c3e50;
+            --text-light: #7f8c8d;
+            --white: #ffffff;
+            --bg-body: #f4f6f8;
+            --shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --border-radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background-color: var(--bg-body); color: var(--text-main); scroll-behavior: smooth; }
+        
+        header { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+        
+        .lang-selector { position: relative; display: inline-block; }
+        .lang-btn { background: var(--primary-light); color: var(--dark); border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+        .lang-dropdown { display: none; position: absolute; right: 0; background: var(--white); min-width: 140px; box-shadow: var(--shadow); border-radius: 8px; overflow: hidden; }
+        .lang-dropdown a { color: var(--text-main); padding: 12px 16px; text-decoration: none; display: block; }
+        .lang-dropdown a:hover { background: var(--primary-light); }
+        .lang-selector:hover .lang-dropdown { display: block; }
+
+        .hero { background: linear-gradient(135deg, rgba(46, 125, 50, 0.9), rgba(21, 101, 192, 0.85)), url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80') center/cover; color: var(--white); padding: 50px 20px; text-align: center; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .hero p { max-width: 700px; margin: 10px auto 20px auto; font-size: 1.05rem; line-height: 1.6; }
+        .btn { padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: 600; display: inline-block; cursor: pointer; border: none; }
+        .btn-primary { background: var(--white); color: var(--dark); }
+
+        .dashboard-section { max-width: 1200px; margin: 25px auto; padding: 0 15px; }
+        .dashboard-wrapper { display: grid; grid-template-columns: 260px 1fr; background: var(--white); border-radius: var(--border-radius); box-shadow: var(--shadow); overflow: hidden; }
+        
+        @media (max-width: 768px) {
+            .dashboard-wrapper { grid-template-columns: 1fr; }
+            .db-content { padding: 15px !important; }
+            .db-grid { grid-template-columns: 1fr !important; }
+        }
+
+        aside { background: #1e293b; color: #94a3b8; padding: 25px 20px; }
+        aside h3 { color: var(--white); margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .sidebar-menu li { padding: 12px 15px; border-radius: 8px; color: var(--white); background: var(--primary); font-weight: 500; }
+
+        .db-content { background: #f8fafc; padding: 25px; }
+        .welcome-card { background: linear-gradient(135deg, var(--dark), var(--primary)); color: var(--white); padding: 22px; border-radius: var(--border-radius); margin-bottom: 25px; }
+        
+        .db-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 25px; margin-bottom: 25px; }
+        .full-width-card { grid-column: 1 / -1; }
+        
+        .db-card { background: var(--white); border-radius: var(--border-radius); padding: 22px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; height: 100%; }
+        .db-card h4 { font-size: 1.1rem; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #f1f5f9; color: var(--dark); display: flex; justify-content: flex-start; align-items: center; gap: 6px; }
+
+        /* Profile Block Elements */
+        .profile-container { display: flex; align-items: center; gap: 10px; background: var(--primary-light); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--primary); }
+        .avatar-circle { width: 26px; height: 26px; background: none; display: flex; justify-content: center; align-items: center; fill: var(--dark); }
+        .profile-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 6px; font-weight: 500; }
+        .profile-row strong { color: #475569; }
+
+        /* Logistics Routing Elements */
+        .hub-search-box { width: 100%; padding: 11px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; }
+        .tab-strip { display: flex; gap: 8px; margin-bottom: 12px; }
+        .tab-btn { flex: 1; padding: 11px; border: 1px solid #cbd5e1; background: #f1f5f9; font-weight: 600; border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: var(--text-main); }
+        .tab-btn.active-tab { background: var(--primary); color: var(--white); border-color: var(--primary); }
+
+        /* Scroll Box Configuration Window */
+        .item-scroll-zone { max-height: 300px; overflow-y: auto; border: 1px solid #e2e8f0; padding: 6px; border-radius: 6px; background: #fafafa; }
+        .market-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px dashed #cbd5e1; font-size: 0.9rem; background: #fff; margin-bottom: 4px; border-radius: 4px; }
+        .price { color: var(--primary); font-weight: 700; min-width: 95px; text-align: right; margin-right: 6px; }
+        
+        .badge { font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; font-weight: bold; margin-left: 5px; }
+        .instock { background: var(--primary-light); color: var(--dark); }
+        .lowstock { background: #fff3cd; color: #856404; }
+
+        .detail-btn { background: var(--secondary); color: var(--white); border: none; padding: 5px 10px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; font-weight: 600; }
+        .analyzer-panel { background: #edf2f7; border-left: 4px solid var(--secondary); border-radius: 6px; padding: 12px; margin-top: 12px; font-size: 0.85rem; display: none; line-height: 1.4; color: var(--text-main); }
+
+        /* Chat Layout Interfaces */
+        .chat-box { background: #f1f5f9; height: 140px; border-radius: 8px; padding: 10px; overflow-y: auto; margin-bottom: 10px; font-size: 0.9rem; }
+        .chat-group { display: flex; gap: 8px; }
+        .btn-send { background: var(--primary); color: white; border: none; padding: 0 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+        footer { background: #0f172a; color: #94a3b8; padding: 25px 15px; text-align: center; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">🌱 QonnaAI Oromiyaa</a>
+            
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="profile-container">
+                    <div class="avatar-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
+                            <path d="M12,12A5,5 0 0,0 17,7A5,5 0 0,0 12,2A5,5 0 0,0 7,7A5,5 0 0,0 12,12M12,14C8.13,14 2,15.93 2,19.8V22H22V19.8C22,15.93 15.87,14 12,14Z" />
+                        </svg>
                     </div>
                     <strong style="color: var(--dark); font-size: 0.85rem;">Diittaa T.</strong>
                 </div>
@@ -417,6 +849,43 @@
             executeHubFiltering();
         }
     </script>
+    <div id="registerModal" style="display:none; position:fixed; top:20%; left:30%; background:white; padding:20px; border:1px solid #ccc; z-index:1000;">
+  <h3>Register</h3>
+  <select id="userRole">
+    <option value="farmer">Farmer</option>
+    <option value="supplier">Supplier</option>
+  </select>
+  <button onclick="submitRegistration()">Register</button>
+  <button onclick="closeModal()">Close</button>
+</div>
+    <script>
+        // Function to show the modal when clicking your profile icon
+        function openModal() {
+            document.getElementById('registerModal').style.display = 'block';
+        }
+
+        // Function to hide it
+        function closeModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+</body>
+</html>
+
+k';
+        }
+
+        // Function to hide it
+        function closeModal() {
+            document.getElementById('registerModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
 </body>
 </html>
 
