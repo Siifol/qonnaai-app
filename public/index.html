@@ -105,9 +105,19 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
                             <path d="M12,12A5,5 0 0,0 17,7A5,5 0 0,0 12,2A5,5 0 0,0 7,7A5,5 0 0,0 12,12M12,14C8.13,14 2,15.93 2,19.8V22H22V19.8C22,15.93 15.87,14 12,14Z" />
                         </svg>
-<div class="profile-container" onclick="openModal()" style="cursor: pointer;">
+<div class="profile-container" onclick="openModal()" style="cursor: pointer; display: inline-flex; align-items: center;">
     <span class="avatar-circle">...</span>
     <span>Diittaa T.</span>
+</div>
+
+<div id="registerModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:25px; border-radius:15px; border:1px solid #ddd; z-index:9999; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+    <h3 style="margin-top:0;">Register</h3>
+    <label for="userRole">I am:</label>
+    <select id="userRole" style="display:block; width:100%; margin:10px 0;">
+        <option value="farmer">Farmer</option>
+        <option value="supplier">Supplier</option>
+    </select>
+    <button onclick="submitRegistration()" style="width:100%; padding:10px; background-color:green; color:white; border:none; border-radius:5px;">Register</button>
 </div>
 
                 <div class="lang-selector">
@@ -132,13 +142,13 @@
             <aside>
                 <h3 id="sidebar-header">Naannoo Daawwannaa</h3>
                 <ul class="sidebar-menu">
-                    <li id="sidebar-item-1">🏠 Iftaandardii Hojii</li>
+                    <li id="sidebar-item-1">🏠 Istaandardii Hojii</li>
                 </ul>
             </aside>
 
             <main class="db-content">
                 <div class="welcome-card" id="welcomeBanner">
-                    <h3 id="welcome-header">Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan</h3>
+                    <h3 id="welcome-header">Baga Gara QonnaAI Oromiyaa Nagaan Dhuftan</h3>
                     <p id="welcome-sub">Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.</p>
                 </div>
 
@@ -156,13 +166,13 @@
                             <div id="chat-initial-msg" style="color: var(--text-light)">System active. Ask a question regarding supply lines, weather variances, or input details.</div>
                         </div>
                         <div class="chat-group">
-                            <input type="text" id="aiInput" class="hub-search-box" style="margin:0;" placeholder="Gaaffii keessan asitti barreessaa...">
+                            <input type="text" id="aiInput" class="hub-search-box" style="margin:0;" placeholder="Gaaffii keessan...">
                             <button class="btn-send" id="aiSendBtn" onclick="dispatchAIQuery()">Send</button>
                         </div>
                     </div>
 
                     <div class="db-card full-width-card">
-                        <h4 id="card3-title">📋 Meeshaalee Qonnaa Hub (<span id="countDisplay">100</span> Argaman)</h4>
+                        <h4 id="card3-title">📋 Meeshaalee Qonnaa  (<span id="countDisplay">100</span> Argaman)</h4>
                         
                         <input type="text" id="hubSearchBar" class="hub-search-box" placeholder="Meeshaalee barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)..." oninput="executeHubFiltering()">
 
@@ -182,7 +192,7 @@
     </section>
 
     <footer>
-        <p>QonnaAI Oromiyaa © 2026 • Scaled Full-Stack Mobile Prototyping Platform</p>
+        <p>QonnaAI Oromiyaa © 2026 </p>
     </footer>
 
     <script>
@@ -352,9 +362,9 @@
             } else {
                 document.getElementById('hero-title').innerText = "QonnaAI Oromiyaa";
                 document.getElementById('hero-desc').innerText = "Connecting regional production units across Shaggar's 12 sub-cities with localized real-time market pricing engines and secure financial logistics processing systems.";
-                document.getElementById('hero-action-btn').innerText = "Giddugaleessa Banu";
-                document.getElementById('welcome-header').innerText = "Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan";
-                document.getElementById('welcome-sub').innerText = "Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.";
+                document.getElementById('hero-action-btn').innerText = "Giddugaleessa Banaa";
+                document.getElementById('welcome-header').innerText = "Baga Gara QonnaAI Oromiyaa Nagaan Dhuftan";
+                document.getElementById('welcome-sub').innerText = "Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo sirrii hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.";
                 
                 document.getElementById('sidebar-header').innerText = "Naannoo Daawwannaa";
                 document.getElementById('sidebar-item-1').innerText = "🏠 Iftaandardii Hojii";
@@ -365,8 +375,8 @@
                 document.getElementById('hubSearchBar').placeholder = "Meeshaalee barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)...";
                 document.getElementById('cropsTabBtn').innerText = "🌾 Sanyii Filatamaa";
                 document.getElementById('toolsTabBtn').innerText = "🛠️ Meeshaalee Qonnaa";
-                document.getElementById('aiInput').placeholder = "Gaaffii keessan asitti barreessaa...";
-                document.getElementById('chat-initial-msg').innerText = "Sirni hojii banaadha. Ghaaffii waa'ee dhiyeessii oomishaa ykn haala qilleensaa asitti gaafadhaa.";
+                document.getElementById('aiInput').placeholder = "Gaaffii keessan...";
+                document.getElementById('chat-initial-msg').innerText = "Sirni hojii banaadha. Gaaffii waa'ee dhiyeessii oomishaa ykn haala qilleensaa asitti gaafadhaa.";
             }
 
             // 2. Profile Details Component Dynamic Language Replacement Block
@@ -563,14 +573,14 @@
             <aside>
                 <h3 id="sidebar-header">Naannoo Daawwannaa</h3>
                 <ul class="sidebar-menu">
-                    <li id="sidebar-item-1">🏠 Iftaandardii Hojii</li>
+                    <li id="sidebar-item-1">🏠 Istaandardii Hojii</li>
                 </ul>
             </aside>
 
             <main class="db-content">
                 <div class="welcome-card" id="welcomeBanner">
                     <h3 id="welcome-header">Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan</h3>
-                    <p id="welcome-sub">Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.</p>
+                    <p id="welcome-sub">Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo sirrii hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.</p>
                 </div>
 
                 <div class="db-grid">
@@ -613,7 +623,7 @@
     </section>
 
     <footer>
-        <p>QonnaAI Oromiyaa © 2026 • Scaled Full-Stack Mobile Prototyping Platform</p>
+        <p>QonnaAI Oromiyaa © 2026 </p>
     </footer>
 
     <script>
@@ -711,7 +721,7 @@
 
             if(matchedObject) {
                 consolePanel.style.display = 'block';
-                const successNotice = currentLanguage === 'en' ? "✓ Verified Unit Pricing Validated via Regional Union Hubs." : "✓ Gatiin meeshaa kun mana oomishaa naannootiin mirkanaa'eera.";
+                const successNotice = currentLanguage === 'en' ? "✓ Verified Unit Pricing Validated via Regional Union Hubs." : "✓ Gatiin meeshaa/sanyii kanaa waajjira qonnaa fi daldalaatin kan mirkanaa'eedha.";
                 const indexLabel = currentLanguage === 'en' ? "Database Index Code" : "Koodii Galmee Teessoo";
                 const metricsLabel = currentLanguage === 'en' ? "Technical Performance Metrics" : "Safartuu Hojii Teeknikaa";
                 
@@ -783,21 +793,21 @@
             } else {
                 document.getElementById('hero-title').innerText = "QonnaAI Oromiyaa";
                 document.getElementById('hero-desc').innerText = "Connecting regional production units across Shaggar's 12 sub-cities with localized real-time market pricing engines and secure financial logistics processing systems.";
-                document.getElementById('hero-action-btn').innerText = "Giddugaleessa Banu";
-                document.getElementById('welcome-header').innerText = "Baga Gara QonnaAI Oromiyaa Nagayan Dhuftan";
-                document.getElementById('welcome-sub').innerText = "Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo dhugaa hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.";
+                document.getElementById('hero-action-btn').innerText = "Giddugaleessa Banaa";
+                document.getElementById('welcome-header').innerText = "Baga Gara QonnaAI Oromiyaatti Nagayan Dhuftan";
+                document.getElementById('welcome-sub').innerText = "Sirni kun koodii meeshaalee 100+ hordofa. Telemetriin yeroo sirrii hidhata Baankiin Hojii Gamtaa Oromiyaa fi Awash waliin qabu hojjachaa jira.";
                 
                 document.getElementById('sidebar-header').innerText = "Naannoo Daawwannaa";
-                document.getElementById('sidebar-item-1').innerText = "🏠 Iftaandardii Hojii";
+                document.getElementById('sidebar-item-1').innerText = "🏠 Istaandardii Hojii";
                 document.getElementById('card1-title').innerText = "📍 Haala Noodii Hojii";
                 document.getElementById('card2-title').innerText = "💬 Gargaaraa Giddugaleessaa";
                 document.getElementById('card3-title').innerHTML = `📋 Meeshaalee Qonnaa Hub (<span id="countDisplay">100</span> Argaman)`;
                 
-                document.getElementById('hubSearchBar').placeholder = "Meeshaalee barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)...";
+                document.getElementById('hubSearchBar').placeholder = "Barbaadi (fkn. Xaafii, Tiraaktarii, Pompola)...";
                 document.getElementById('cropsTabBtn').innerText = "🌾 Sanyii Filatamaa";
                 document.getElementById('toolsTabBtn').innerText = "🛠️ Meeshaalee Qonnaa";
-                document.getElementById('aiInput').placeholder = "Gaaffii keessan asitti barreessaa...";
-                document.getElementById('chat-initial-msg').innerText = "Sirni hojii banaadha. Ghaaffii waa'ee dhiyeessii oomishaa ykn haala qilleensaa asitti gaafadhaa.";
+                document.getElementById('aiInput').placeholder = "Gaaffii keessan...";
+                document.getElementById('chat-initial-msg').innerText = "Sirni hojii banaadha. Gaaffii waa'ee dhiyeessii oomishaa ykn haala qilleensaa asitti gaafadhaa.";
             }
 
             // 2. Profile Details Component Dynamic Language Replacement Block
@@ -840,7 +850,7 @@
                         item.spec = `Industrial Infrastructure Code: T-${800 + i}. Maintenance Interval: Extended low overhead. Fully qualified for Awash Bank 10M collateral-free loans.`;
                     } else {
                         item.status = (i + 1) % 9 === 0 ? 'Hanqina' : 'Hanga Gahaa';
-                        item.spec = `Koodii Warshaa Teeknoolojii: T-${800 + i}. Yeroo Suphaa: Baasii xiqqaa fi dheeraa. Liqii Baankii Awash Birrii Miliyoona 10 wabii malee fudhachuuf kan mijaaye.`;
+                        item.spec = `Koodii Warshaa Teeknoolojii: T-${800 + i}. Yeroo Suphaa: Baasii xiqqaa fi dheeraa. Liqii Baankii Awash irraa mijaa'en.`;
                     }
                 }
             });
@@ -862,20 +872,6 @@
         // Function to show the modal when clicking your profile icon
         function openModal() {
             document.getElementById('registerModal').style.display = 'block';
-        }
-
-        // Function to hide it
-        function closeModal() {
-            document.getElementById('registerModal').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
-
-</body>
-</html>
-
-k';
         }
 
         // Function to hide it
