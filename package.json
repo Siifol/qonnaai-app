@@ -1,0 +1,10 @@
+{
+  "name": "qonnaai-oromiyaa-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Enterprise Prototype Server for Shaggar Agricultural Logistics Matrix",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
