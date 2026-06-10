@@ -100,15 +100,15 @@
             <a href="#" class="logo">🌱 QonnaAI Oromiyaa</a>
             
             <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="profile-container">
+                
                     <div class="avatar-circle">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
                             <path d="M12,12A5,5 0 0,0 17,7A5,5 0 0,0 12,2A5,5 0 0,0 7,7A5,5 0 0,0 12,12M12,14C8.13,14 2,15.93 2,19.8V22H22V19.8C22,15.93 15.87,14 12,14Z" />
                         </svg>
-<div class="profile-container" onclick="openModal()" style="cursor: pointer; display: inline-flex; align-items: center;">
-    <span class="avatar-circle">...</span>
-    <span>Diittaa T.</span>
+<div class="profile-container" onclick="openModal()" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--primary); background: var(--primary-light); margin-right: 10px;">
+    <span style="font-size: 20px;">👤</span>
 </div>
+
 
 <div id="registerModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:25px; border-radius:15px; border:1px solid #ddd; z-index:9999; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
     <h3 style="margin-top:0;">Register</h3>
@@ -118,16 +118,31 @@
         <option value="supplier">Supplier</option>
     </select>
     <button onclick="submitRegistration()" style="width:100%; padding:10px; background-color:green; color:white; border:none; border-radius:5px;">Register</button>
+    <button onclick="closeModal()" style="width: 100%; padding: 10px; background-color: #eee; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;">
+    Close
+</button>
 </div>
 
-                <div class="lang-selector">
-                    <button class="lang-btn">🌐 Language</button>
-                    <div class="lang-dropdown">
-                        <a href="#" onclick="setSystemLanguage('om')">Afaan Oromoo</a>
-                        <a href="#" onclick="setSystemLanguage('en')">English</a>
-                    </div>
-                </div>
-            </div>
+                <div class="lang-selector" style="position: relative; display: inline-block; margin-left: 10px;">
+    <button onclick="toggleLanguageMenu()" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 18px;">
+        🌐
+    </button>
+
+    <div id="myLangDropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <a href="#" onclick="setSystemLanguage('en'); toggleLanguageMenu();" style="display: block; padding: 5px; text-decoration: none; color: #333;">English</a>
+        <a href="#" onclick="setSystemLanguage('om'); toggleLanguageMenu();" style="display: block; padding: 5px; text-decoration: none; color: #333;">Afaan Oromoo</a>
+        <script>
+function toggleLanguageMenu() {
+    const dropdown = document.getElementById('myLangDropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block';
+    } else {
+        dropdown.style.display = 'none';
+    }
+}
+</script>
+    </div>
+</div>
         </nav>
     </header>
 
