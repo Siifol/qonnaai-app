@@ -110,23 +110,119 @@
 </div>
 
 
-<div id="registerModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; padding:25px; border-radius:15px; border:1px solid #ddd; z-index:9999; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-    <h3 style="margin-top:0;">Register</h3>
-    <label for="userRole">I am:</label>
-    <select id="userRole" style="display:block; width:100%; margin:10px 0;">
-        <option value="farmer">Farmer</option>
-        <option value="supplier">Supplier</option>
-    </select>
-    <button onclick="submitRegistration()" style="width:100%; padding:10px; background-color:green; color:white; border:none; border-radius:5px;">Register</button>
-    <button onclick="closeModal()" style="width: 100%; padding: 10px; background-color: #eee; border: 1px solid #ccc; border-radius: 6px; cursor: pointer;">
-    Close
-</button>
+<div id="registerModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:90%; max-width:350px; background:white; padding:20px; border-radius:15px; border:1px solid #ddd; z-index:9999; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+    
+    <div id="regForm">
+        <h3>Register</h3>
+        <input type="text" id="fullName" placeholder="Full Name" style="width:100%; margin-bottom:10px; padding:8px;">
+        <input type="text" id="contact" placeholder="Phone or Email" style="width:100%; margin-bottom:10px; padding:8px;">
+        <input type="text" id="username" placeholder="Username" style="width:100%; margin-bottom:10px; padding:8px;">
+        <input type="password" id="password" placeholder="Password (7+ chars, #, $, 0-9)" style="width:100%; margin-bottom:10px; padding:8px;">
+        
+        <label>Role:</label>
+        <select id="role" style="width:100%; margin-bottom:10px; padding:8px;">
+            <option value="farmer">Farmer</option>
+            <option value="supplier">Supplier</option>
+        </select>
+
+        <label>Sheger City:</label>
+        <select id="subcity" style="width:100%; margin-bottom:10px; padding:8px;">
+            <option value="">Select City</option>
+            <option value="Burraayyuu">BUrraayyuu</option>
+            <option value="Sabbata">Sabbataa</option>
+            <option value="Galaan">Galaan</option>
+            <option value="EekkaaXaafoo">Eekkaa Xaafoo</option>
+            <option value="sululta">Sululta</option>
+            <option value="GalaanGuddaa">Galaan Guddaa</option>
+            <option value="ManaAbichu">Mana Abbichuu</option>
+            <option value="Kurajida">Kuraa Jiddaa</option>
+            <option value="malkanono">Malkaa Noonnoo</option>
+            <option value="gafarsaguje">Gafarsa Gujee</option>
+            <option value="furi">Furi</option>
+            <option value="koye_feche">Koye Feche</option>
+        </select>
+
+        <label style="font-size: 12px;">Upload ID:</label>
+        <input type="file" id="cityId" accept="image/*" style="width:100%; margin-bottom:10px;">
+        
+        <button onclick="handleRegistration()" style="width:100%; padding:10px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">Register</button>
+        <p style="text-align:center; margin-top:10px;">Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+    </div>
+
+    <div id="loginForm" style="display:none;">
+        <h3>Login</h3>
+        <input type="text" id="loginUser" placeholder="Username" style="width:100%; margin-bottom:10px; padding:8px;">
+        <input type="password" id="loginPass" placeholder="Password" style="width:100%; margin-bottom:10px; padding:8px;">
+        <button onclick="handleLogin()" style="width:100%; padding:10px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">Login</button>
+        <p style="text-align:center; margin-top:10px;"><a href="#" onclick="showRegister()">Back to Register</a></p>
+    </div>
+
+    <button onclick="closeModal()" style="width:100%; padding:10px; margin-top:10px; background:#f4f4f4; border:1px solid #ccc; cursor:pointer;">Close</button>
 </div>
+
 
                 <div class="lang-selector" style="position: relative; display: inline-block; margin-left: 10px;">
     <button onclick="toggleLanguageMenu()" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 18px;">
         🌐
     </button>
+    <script>
+    // 1. Modal Control
+    function openModal() {
+        document.getElementById('registerModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+        document.getElementById('registerModal').style.display = 'none';
+    }
+
+    // 2. Switch between Register and Login
+    function showLogin() {
+        document.getElementById('regForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
+    }
+
+    function showRegister() {
+        document.getElementById('regForm').style.display = 'block';
+        document.getElementById('loginForm').style.display = 'none';
+    }
+
+    // 3. Handle Registration Validation
+    function handleRegistration() {
+        const password = document.getElementById('password').value;
+        const subcity = document.getElementById('subcity').value;
+        const file = document.getElementById('cityId').files[0];
+        
+        // Regex: 7+ chars, at least one number, one special character
+        const passwordPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{7,})/;
+
+        if (!passwordPattern.test(password)) {
+            alert("Password must be 7+ chars, include a number and a special character.");
+            return;
+        }
+        if (subcity === "") {
+            alert("Please select your Sheger City.");
+            return;
+        }
+        if (!file) {
+            alert("Please upload your valid Sheger City ID.");
+            return;
+        }
+
+        alert("Registration successful! We will verify your ID.");
+        closeModal();
+    }
+
+    // 4. Handle Login
+    function handleLogin() {
+        const user = document.getElementById('loginUser').value;
+        if(user) {
+            alert("Welcome back, " + user + "!");
+            closeModal();
+        } else {
+            alert("Please enter your username.");
+        }
+    }
+</script>
 
     <div id="myLangDropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
         <a href="#" onclick="setSystemLanguage('en'); toggleLanguageMenu();" style="display: block; padding: 5px; text-decoration: none; color: #333;">English</a>
