@@ -201,26 +201,6 @@
 </div>
 
     <script>
- function handleLogin() {
-    const user = document.getElementById('loginUser').value;
-    const pass = document.getElementById('loginPass').value;
-    const errorBox = document.getElementById('loginError');
-
-    // Fetch the stored password specifically for this username
-    const storedPass = localStorage.getItem(user + '_pass');
-
-    // Check if the user exists AND the password matches
-    if (storedPass !== null && storedPass === pass) {
-        // SUCCESS
-        errorBox.style.display = 'none'; 
-        alert("Baga nagaan dhuftan, " + user + "!");
-        document.getElementById('loginForm').style.display = 'none';
-    } else {
-        // FAILURE: This is what was missing!
-        // This makes the red error box appear if the login is wrong
-        errorBox.style.display = 'block';
-    }
-}
 function handleRegister() {
     const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
@@ -277,16 +257,22 @@ function handleRegister() {
         closeModal();
     }
 
-    // 4. Handle Login
     function handleLogin() {
-        const user = document.getElementById('loginUser').value;
-        if(user) {
-            alert("Welcome back, " + user + "!");
-            closeModal();
-        } else {
-            alert("Please enter your username.");
-        }
+    const user = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    
+    // Get the saved password for this user
+    const savedPass = localStorage.getItem(user + '_pass');
+
+    // THE FIX: It must check that pass is NOT empty, AND that it matches the savedPass
+    if (user !== "" && pass !== "" && savedPass === pass) {
+        alert("Welcome back, " + user + "!");
+        // Add your code here to hide the form or redirect
+    } else {
+        alert("Error: Invalid username or password!"); // Or show your red error box
     }
+}
+
 </script>
 
     <div id="myLangDropdown" style="display: none; position: absolute; right: 0; top: 50px; background: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -1055,6 +1041,36 @@ function toggleLanguageMenu() {
             document.getElementById('registerModal').style.display = 'none';
         }
     </script>
+    <script>
+    // 1. REGISTRATION CODE
+    function handleRegister() {
+        const user = document.getElementById('regUser').value.trim();
+        const pass = document.getElementById('regPass').value.trim();
+
+        if (user !== "" && pass !== "") {
+            localStorage.setItem(user + '_pass', pass);
+            alert("Registration successful! You can now log in.");
+        } else {
+            alert("Please enter both username and password.");
+        }
+    }
+
+    // 2. LOGIN CODE
+    function handleLogin() {
+        const user = document.getElementById('loginUser').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        
+        const savedPass = localStorage.getItem(user + '_pass');
+
+        if (user !== "" && pass !== "" && savedPass === pass) {
+            alert("Baga nagaan dhuftan, " + user + "!");
+            document.getElementById('loginForm').style.display = 'none';
+        } else {
+            alert("Error: Maqaa ykn Jecha Iccitii dogoggora!");
+        }
+    }
+</script>
+
 </body>
 </html>
 
