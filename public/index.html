@@ -156,6 +156,20 @@
         <button onclick="handleLogin()" style="width:100%; padding:10px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">Login</button>
         <p style="text-align:center; margin-top:10px;"><a href="#" onclick="showRegister()">Back to Register</a></p>
     </div>
+    <div id="loginForm" style="display:none; padding:20px; background:white; border-radius:15px; border:1px solid #ddd;">
+    <h3>Login</h3>
+
+    <div id="loginError" style="display:none; color:white; background-color:#dc3545; padding:10px; margin-bottom:15px; border-radius:5px; text-align:center;">
+        ⚠️ Maqaa ykn Jecha Iccitii dogoggora.
+    </div>
+
+    <input type="text" id="loginUser" placeholder="Username" style="width:100%; margin-bottom:10px; padding:8px;">
+    <input type="password" id="loginPass" placeholder="Password" style="width:100%; margin-bottom:10px; padding:8px;">
+    
+    <button onclick="handleLogin()" style="width:100%; padding:10px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">
+        Login
+    </button>
+</div>
 
     <button onclick="closeModal()" style="width:100%; padding:10px; margin-top:10px; background:#f4f4f4; border:1px solid #ccc; cursor:pointer;">Close</button>
 </div>
@@ -165,7 +179,35 @@
     <button onclick="toggleLanguageMenu()" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 18px;">
         🌐
     </button>
+    <div id="loginForm" style="display:none;">
+    <h3>Login</h3>
+    
+    <div id="loginError" style="display:none; color: white; background-color: #dc3545; padding: 10px; margin-bottom: 10px; border-radius: 5px; text-align: center;">
+        Invalid username or password.
+    </div>
+
+    <input type="text" id="loginUser" ...> <input type="password" id="loginPass" ...> <button onclick="handleLogin()">Login</button>
+</div>
     <script>
+    function handleLogin() {
+    const user = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    const errorBox = document.getElementById('loginError');
+
+    // Fetch the stored password for the typed username
+    const storedPass = localStorage.getItem(user + '_pass');
+
+    // Check if the user exists and the password matches
+    if (storedPass !== null && storedPass === pass) {
+        // SUCCESS
+        errorBox.style.display = 'none';
+        alert("Welcome back, " + user + "!");
+        document.getElementById('loginForm').style.display = 'none';
+    } else {
+        // FAILURE
+        errorBox.style.display = 'block'; // Show the red error box
+    }
+}
     // 1. Modal Control
     function openModal() {
         document.getElementById('registerModal').style.display = 'block';
