@@ -173,6 +173,9 @@
 
     <button onclick="closeModal()" style="width:100%; padding:10px; margin-top:10px; background:#f4f4f4; border:1px solid #ccc; cursor:pointer;">Close</button>
 </div>
+<div id="loginError" style="display:none; color:white; background-color:#dc3545; padding:10px; margin-bottom:10px; border-radius:5px; text-align:center;">
+    Maqaa ykn Jecha Iccitii dogoggora!
+</div>
 
 
                 <div class="lang-selector" style="position: relative; display: inline-block; margin-left: 10px;">
@@ -187,26 +190,46 @@
     </div>
 
     <input type="text" id="loginUser" ...> <input type="password" id="loginPass" ...> <button onclick="handleLogin()">Login</button>
+    <button onclick="alert(JSON.stringify(localStorage))" style="background: orange; color: black; margin-top: 10px;">
+    Test: Show Database Contents
+</button>
+<div id="loginError" style="display:none; color:white; background-color:red; padding:10px;">
+    Maqaa ykn Jecha Iccitii dogoggora!
 </div>
+
+
+</div>
+
     <script>
-    function handleLogin() {
+ function handleLogin() {
     const user = document.getElementById('loginUser').value;
     const pass = document.getElementById('loginPass').value;
     const errorBox = document.getElementById('loginError');
 
-    // Fetch the stored password for the typed username
+    // Fetch the stored password specifically for this username
     const storedPass = localStorage.getItem(user + '_pass');
 
-    // Check if the user exists and the password matches
+    // Check if the user exists AND the password matches
     if (storedPass !== null && storedPass === pass) {
         // SUCCESS
-        errorBox.style.display = 'none';
-        alert("Welcome back, " + user + "!");
+        errorBox.style.display = 'none'; 
+        alert("Baga nagaan dhuftan, " + user + "!");
         document.getElementById('loginForm').style.display = 'none';
     } else {
-        // FAILURE
-        errorBox.style.display = 'block'; // Show the red error box
+        // FAILURE: This is what was missing!
+        // This makes the red error box appear if the login is wrong
+        errorBox.style.display = 'block';
     }
+}
+function handleRegister() {
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    // This is the key: saving with '_pass' so login can find it
+    localStorage.setItem(user + '_pass', pass);
+    
+    alert("Registration successful!");
+    showLogin();
 }
     // 1. Modal Control
     function openModal() {
