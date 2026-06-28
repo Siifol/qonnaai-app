@@ -156,8 +156,6 @@
         <button onclick="handleLogin()" style="width:100%; padding:10px; background:green; color:white; border:none; border-radius:5px; cursor:pointer;">Login</button>
         <p style="text-align:center; margin-top:10px;"><a href="#" onclick="showRegister()">Back to Register</a></p>
     </div>
-    <div id="loginForm" style="display:none; padding:20px; background:white; border-radius:15px; border:1px solid #ddd;">
-    <h3>Login</h3>
 
     <div id="loginError" style="display:none; color:white; background-color:#dc3545; padding:10px; margin-bottom:15px; border-radius:5px; text-align:center;">
         ⚠️ Maqaa ykn Jecha Iccitii dogoggora.
@@ -173,31 +171,15 @@
 
     <button onclick="closeModal()" style="width:100%; padding:10px; margin-top:10px; background:#f4f4f4; border:1px solid #ccc; cursor:pointer;">Close</button>
 </div>
-<div id="loginError" style="display:none; color:white; background-color:#dc3545; padding:10px; margin-bottom:10px; border-radius:5px; text-align:center;">
-    Maqaa ykn Jecha Iccitii dogoggora!
-</div>
-
 
                 <div class="lang-selector" style="position: relative; display: inline-block; margin-left: 10px;">
     <button onclick="toggleLanguageMenu()" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ccc; background: white; cursor: pointer; font-size: 18px;">
         🌐
     </button>
-    <div id="loginForm" style="display:none;">
-    <h3>Login</h3>
-    
-    <div id="loginError" style="display:none; color: white; background-color: #dc3545; padding: 10px; margin-bottom: 10px; border-radius: 5px; text-align: center;">
-        Invalid username or password.
-    </div>
-
     <input type="text" id="loginUser" ...> <input type="password" id="loginPass" ...> <button onclick="handleLogin()">Login</button>
     <button onclick="alert(JSON.stringify(localStorage))" style="background: orange; color: black; margin-top: 10px;">
     Test: Show Database Contents
 </button>
-<div id="loginError" style="display:none; color:white; background-color:red; padding:10px;">
-    Maqaa ykn Jecha Iccitii dogoggora!
-</div>
-
-
 </div>
 
     <script>
